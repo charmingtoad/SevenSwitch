@@ -133,8 +133,8 @@ import QuartzCore
     @IBInspectable public var isRounded: Bool = true {
         willSet {
             if newValue {
-                backgroundView.layer.cornerRadius = self.frame.size.height * 0.5
-                thumbView.layer.cornerRadius = (self.frame.size.height * 0.5) - 1
+                backgroundView.layer.cornerRadius = self.bounds.size.height * 0.5
+                thumbView.layer.cornerRadius = (self.bounds.size.height * 0.5) - 1
             }
             else {
                 backgroundView.layer.cornerRadius = 2
@@ -229,7 +229,7 @@ import QuartzCore
     private func setup() {
         
         // background
-        self.backgroundView = UIView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        self.backgroundView = UIView(frame: CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height))
         backgroundView.backgroundColor = UIColor.clearColor()
         backgroundView.layer.cornerRadius = self.bounds.size.height * 0.5
         backgroundView.layer.borderColor = self.borderColor.CGColor
@@ -295,12 +295,12 @@ import QuartzCore
         
         UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.BeginFromCurrentState], animations: {
                 if self.on {
-                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.bounds.origin.y, activeKnobWidth, self.thumbView.bounds.size.height)
+                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.center.y - self.thumbView.bounds.height / 2.0, activeKnobWidth, self.thumbView.bounds.size.height)
                     self.backgroundView.backgroundColor = self.onTintColor
                     self.thumbView.backgroundColor = self.onThumbTintColor
                 }
                 else {
-                    self.thumbView.frame = CGRectMake(self.thumbView.bounds.origin.x, self.thumbView.bounds.origin.y, activeKnobWidth, self.thumbView.bounds.size.height)
+                    self.thumbView.frame = CGRectMake(self.thumbView.center.x - self.thumbView.bounds.width / 2.0, self.thumbView.center.y - self.thumbView.bounds.height / 2.0, activeKnobWidth, self.thumbView.bounds.size.height)
                     self.backgroundView.backgroundColor = self.activeColor
                     self.thumbView.backgroundColor = self.thumbTintColor
                 }
@@ -427,10 +427,10 @@ import QuartzCore
             isAnimating = true
             UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.BeginFromCurrentState], animations: {
                 if self.tracking {
-                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.bounds.origin.y, activeKnobWidth, self.thumbView.bounds.size.height)
+                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.center.y - self.thumbView.bounds.height / 2.0, activeKnobWidth, self.thumbView.bounds.size.height)
                 }
                 else {
-                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), self.thumbView.bounds.origin.y, normalKnobWidth, self.thumbView.bounds.size.height)
+                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), self.thumbView.center.y - self.thumbView.bounds.height / 2.0, normalKnobWidth, self.thumbView.bounds.size.height)
                 }
                 
                 self.backgroundView.backgroundColor = self.onTintColor
@@ -446,10 +446,10 @@ import QuartzCore
         }
         else {
             if self.tracking {
-                thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), thumbView.bounds.origin.y, activeKnobWidth, thumbView.bounds.size.height)
+                thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.center.y - self.thumbView.bounds.height / 2.0, activeKnobWidth, thumbView.bounds.size.height)
             }
             else {
-                thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), thumbView.bounds.origin.y, normalKnobWidth, thumbView.bounds.size.height)
+                thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), self.thumbView.center.y - self.thumbView.bounds.height / 2.0, normalKnobWidth, thumbView.bounds.size.height)
             }
             
             backgroundView.backgroundColor = self.onTintColor
@@ -476,11 +476,11 @@ import QuartzCore
             isAnimating = true
             UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.BeginFromCurrentState], animations: {
                 if self.tracking {
-                    self.thumbView.frame = CGRectMake(1, self.thumbView.frame.origin.y, activeKnobWidth, self.thumbView.frame.size.height);
+                    self.thumbView.frame = CGRectMake(1, self.thumbView.center.y - self.thumbView.bounds.height / 2.0, activeKnobWidth, self.thumbView.bounds.size.height);
                     self.backgroundView.backgroundColor = self.activeColor
                 }
                 else {
-                    self.thumbView.frame = CGRectMake(1, self.thumbView.frame.origin.y, normalKnobWidth, self.thumbView.frame.size.height);
+                    self.thumbView.frame = CGRectMake(1, self.thumbView.center.y - self.thumbView.bounds.height / 2.0, normalKnobWidth, self.thumbView.bounds.size.height);
                     self.backgroundView.backgroundColor = self.inactiveColor
                 }
                 
@@ -497,11 +497,11 @@ import QuartzCore
         }
         else {
             if (self.tracking) {
-                thumbView.frame = CGRectMake(1, thumbView.frame.origin.y, activeKnobWidth, thumbView.frame.size.height)
+                thumbView.frame = CGRectMake(1, self.thumbView.center.y - self.thumbView.bounds.height / 2.0, activeKnobWidth, thumbView.bounds.size.height)
                 backgroundView.backgroundColor = self.activeColor
             }
             else {
-                thumbView.frame = CGRectMake(1, thumbView.frame.origin.y, normalKnobWidth, thumbView.frame.size.height)
+                thumbView.frame = CGRectMake(1, self.thumbView.center.y - self.thumbView.bounds.height / 2.0, normalKnobWidth, thumbView.bounds.size.height)
                 backgroundView.backgroundColor = self.inactiveColor
             }
             backgroundView.layer.borderColor = self.borderColor.CGColor
