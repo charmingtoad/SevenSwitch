@@ -231,7 +231,7 @@ import QuartzCore
         // background
         self.backgroundView = UIView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         backgroundView.backgroundColor = UIColor.clearColor()
-        backgroundView.layer.cornerRadius = self.frame.size.height * 0.5
+        backgroundView.layer.cornerRadius = self.bounds.size.height * 0.5
         backgroundView.layer.borderColor = self.borderColor.CGColor
         backgroundView.layer.borderWidth = 1.0
         backgroundView.userInteractionEnabled = false
@@ -239,33 +239,33 @@ import QuartzCore
         self.addSubview(backgroundView)
         
         // on/off images
-        self.onImageView = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height))
+        self.onImageView = UIImageView(frame: CGRectMake(0, 0, self.bounds.size.width - self.bounds.size.height, self.bounds.size.height))
         onImageView.alpha = 1.0
         onImageView.contentMode = UIViewContentMode.Center
         backgroundView.addSubview(onImageView)
         
-        self.offImageView = UIImageView(frame: CGRectMake(self.frame.size.height, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height))
+        self.offImageView = UIImageView(frame: CGRectMake(self.bounds.size.height, 0, self.bounds.size.width - self.bounds.size.height, self.bounds.size.height))
         offImageView.alpha = 1.0
         offImageView.contentMode = UIViewContentMode.Center
         backgroundView.addSubview(offImageView)
         
         // labels
-        self.onLabel = UILabel(frame: CGRectMake(0, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height))
+        self.onLabel = UILabel(frame: CGRectMake(0, 0, self.bounds.size.width - self.bounds.size.height, self.bounds.size.height))
         onLabel.textAlignment = NSTextAlignment.Center
         onLabel.textColor = UIColor.lightGrayColor()
         onLabel.font = UIFont.systemFontOfSize(12)
         backgroundView.addSubview(onLabel)
         
-        self.offLabel = UILabel(frame: CGRectMake(self.frame.size.height, 0, self.frame.size.width - self.frame.size.height, self.frame.size.height))
+        self.offLabel = UILabel(frame: CGRectMake(self.bounds.height, 0, self.bounds.size.width - self.bounds.size.height, self.bounds.size.height))
         offLabel.textAlignment = NSTextAlignment.Center
         offLabel.textColor = UIColor.lightGrayColor()
         offLabel.font = UIFont.systemFontOfSize(12)
         backgroundView.addSubview(offLabel)
         
         // thumb
-        self.thumbView = UIView(frame: CGRectMake(1, 1, self.frame.size.height - 2, self.frame.size.height - 2))
+        self.thumbView = UIView(frame: CGRectMake(1, 1, self.bounds.size.height - 2, self.bounds.size.height - 2))
         thumbView.backgroundColor = self.thumbTintColor
-        thumbView.layer.cornerRadius = (self.frame.size.height * 0.5) - 1
+        thumbView.layer.cornerRadius = (self.bounds.size.height * 0.5) - 1
         thumbView.layer.shadowColor = self.shadowColor.CGColor
         thumbView.layer.shadowRadius = 2.0
         thumbView.layer.shadowOpacity = 0.5
@@ -276,7 +276,7 @@ import QuartzCore
         self.addSubview(thumbView)
         
         // thumb image
-        self.thumbImageView = UIImageView(frame: CGRectMake(0, 0, thumbView.frame.size.width, thumbView.frame.size.height))
+        self.thumbImageView = UIImageView(frame: CGRectMake(0, 0, thumbView.bounds.size.width, thumbView.bounds.size.height))
         thumbImageView.contentMode = UIViewContentMode.Center
         thumbImageView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         thumbView.addSubview(thumbImageView)
@@ -295,12 +295,12 @@ import QuartzCore
         
         UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.BeginFromCurrentState], animations: {
                 if self.on {
-                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.frame.origin.y, activeKnobWidth, self.thumbView.frame.size.height)
+                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.bounds.origin.y, activeKnobWidth, self.thumbView.bounds.size.height)
                     self.backgroundView.backgroundColor = self.onTintColor
                     self.thumbView.backgroundColor = self.onThumbTintColor
                 }
                 else {
-                    self.thumbView.frame = CGRectMake(self.thumbView.frame.origin.x, self.thumbView.frame.origin.y, activeKnobWidth, self.thumbView.frame.size.height)
+                    self.thumbView.frame = CGRectMake(self.thumbView.bounds.origin.x, self.thumbView.bounds.origin.y, activeKnobWidth, self.thumbView.bounds.size.height)
                     self.backgroundView.backgroundColor = self.activeColor
                     self.thumbView.backgroundColor = self.thumbTintColor
                 }
@@ -368,7 +368,7 @@ import QuartzCore
         super.layoutSubviews()
         
         if !isAnimating {
-            let frame = self.frame
+            let frame = self.bounds
             
             // background
             backgroundView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height)
@@ -427,10 +427,10 @@ import QuartzCore
             isAnimating = true
             UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.BeginFromCurrentState], animations: {
                 if self.tracking {
-                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.frame.origin.y, activeKnobWidth, self.thumbView.frame.size.height)
+                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), self.thumbView.bounds.origin.y, activeKnobWidth, self.thumbView.bounds.size.height)
                 }
                 else {
-                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), self.thumbView.frame.origin.y, normalKnobWidth, self.thumbView.frame.size.height)
+                    self.thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), self.thumbView.bounds.origin.y, normalKnobWidth, self.thumbView.bounds.size.height)
                 }
                 
                 self.backgroundView.backgroundColor = self.onTintColor
@@ -446,10 +446,10 @@ import QuartzCore
         }
         else {
             if self.tracking {
-                thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), thumbView.frame.origin.y, activeKnobWidth, thumbView.frame.size.height)
+                thumbView.frame = CGRectMake(self.bounds.size.width - (activeKnobWidth + 1), thumbView.bounds.origin.y, activeKnobWidth, thumbView.bounds.size.height)
             }
             else {
-                thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), thumbView.frame.origin.y, normalKnobWidth, thumbView.frame.size.height)
+                thumbView.frame = CGRectMake(self.bounds.size.width - (normalKnobWidth + 1), thumbView.bounds.origin.y, normalKnobWidth, thumbView.bounds.size.height)
             }
             
             backgroundView.backgroundColor = self.onTintColor
